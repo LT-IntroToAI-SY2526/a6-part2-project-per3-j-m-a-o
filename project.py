@@ -4,8 +4,8 @@ Assignment 6 Part 3
 
 Group Members:
 - 
-- 
-- 
+- Juan 
+- Adrian
 - 
 
 Dataset: [Name of your dataset]
