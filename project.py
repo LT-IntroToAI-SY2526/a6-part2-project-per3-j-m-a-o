@@ -21,7 +21,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 import numpy as np
 
 # TODO: Update this with your actual filename
-DATA_FILE = 'your_data.csv'
+DATA_FILE = 'FootballTransferValueTable.csv'
 
 def load_and_explore_data(filename):
     """
@@ -37,10 +37,20 @@ def load_and_explore_data(filename):
     print("=" * 70)
     print("LOADING AND EXPLORING DATA")
     print("=" * 70)
-    
-    # Your code here
-    
-    pass
+    data = pd.read_csv(filename)
+    # TODO: Print the first 5 rows
+    print("=== Football Transfer Value Data ===")
+    print(f"\nFirst5 rows:")
+    print(data.head())
+    # TODO: Print the shape of the dataset
+    print(f"\nDataset shape: {data.shape[0]} rows, {data.shape[1]} columns")
+    # TODO: Print basic statistics for ALL columns
+    print(f"\nBasic statistics:")
+    print(data.describe())
+    # TODO: Print the column names
+    print(f"\nColumn names: {list(data.colums)}")
+    # TODO: Return the dataframe
+    return data
 
 
 def visualize_data(data):
@@ -61,10 +71,31 @@ def visualize_data(data):
     print("VISUALIZING RELATIONSHIPS")
     print("=" * 70)
     
-    # Your code here
-    # Hint: Use subplots like in Part 2!
+    fig, axes = plt.subplots(2, 2, figsize=(12,10))
+ 
+    fig.suptitle('Player Stats vs Value', fontsize=16, fontweight='bold')
     
-    pass
+    axes[0, 0].scatter(data['Age'], data['Value'], color='blue', alpha=0.6)
+    axes[0, 0].set_xlabel('Age (#)')
+    axes[0, 0].set_ylabel('Value ($)')
+    axes[0, 0].set_title('Age vs Value')
+    axes[0, 0].grid(True, alpha=0.3)
+    
+    axes[0, 1].scatter(data['Goals'], data['Value'], color='green', alpha=0.6)
+    axes[0, 1].set_xlabel('Goals (rooms)')
+    axes[0, 1].set_ylabel('Value ($)')
+    axes[0, 1].set_title('Goals vs Value')
+    axes[0, 1].grid(True, alpha=0.3)
+   
+    axes[1, 0].scatter(data['Assists'], data['Value'], color='red', alpha=0.6)
+    axes[1, 0].set_xlabel('Assists (rooms)')
+    axes[1, 0].set_ylabel('Value ($)')
+    axes[1, 0].set_title('Assists vs Value')
+    axes[1, 0].grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('stat_plots.png', dpi=300)
+    plt.show()
 
 
 def prepare_and_split_data(data):
