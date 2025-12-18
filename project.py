@@ -21,7 +21,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 import numpy as np
 
 # TODO: Update this with your actual filename
-DATA_FILE = 'FootballTransferValueTable.csv'
+DATA_FILE = 'valueTable.csv'
 
 def load_and_explore_data(filename):
     """
@@ -48,7 +48,7 @@ def load_and_explore_data(filename):
     print(f"\nBasic statistics:")
     print(data.describe())
     # TODO: Print the column names
-    print(f"\nColumn names: {list(data.colums)}")
+    print(f"\nColumn names: {list(data.columns)}")
     # TODO: Return the dataframe
     return data
 
