@@ -20,7 +20,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 import numpy as np
 
 # TODO: Update this with your actual filename
-DATA_FILE = 'your_data.csv'
+DATA_FILE = 'FootballTransferValueTable.csv'
 
 def load_and_explore_data(filename):
     """
@@ -56,7 +56,7 @@ def load_and_explore_data(filename):
     
     # TODO: Return the dataframe
     return data
-    pass
+    
 
 
 def visualize_data(data):
@@ -118,7 +118,7 @@ def visualize_data(data):
     # TODO: Show the plot
     print("\n✓ Feature plots saved as 'feature_plots.png'")
     plt.show()
-    pass
+    
 
 
 def prepare_and_split_data(data):
@@ -171,7 +171,7 @@ def prepare_and_split_data(data):
     return X_train, X_test, y_train, y_test
 
 
-    pass
+    
 
 
 def train_model(X_train, y_train):
@@ -227,7 +227,7 @@ def train_model(X_train, y_train):
     # TODO: Return the trained model
     return model
 
-    pass
+    
 
 
 def evaluate_model(model, X_test, y_test):
@@ -284,7 +284,7 @@ def evaluate_model(model, X_test, y_test):
         print(f"{i}. {name}: {importance:.2f}")
     # TODO: Return predictions
     return predictions
-    pass
+    
 
 
 def make_prediction(model):
@@ -307,8 +307,8 @@ def make_prediction(model):
     # Your code here
     # Example: If predicting house price with [sqft, bedrooms, bathrooms]
     # sample = pd.DataFrame([[2000, 3, 2]], columns=feature_names)
-    
     pass
+    
 
 
 if __name__ == "__main__":
