@@ -121,10 +121,26 @@ def prepare_and_split_data(data):
     
     # Your code here
     
-    pass
+    feature_Col = ['Age', 'Goals', 'Assists']
+    X = data[feature_Col]
+    y = data['Value']
+    print(f"\n=== Feature Preparation ===")
+    print(f"Features (X) shape: {X.shape}")
+    print(f"Target (y) shape: {y.shape}")
+    print(f"\nFeature columns: {list(X.columns)}")
+
+    X_train = X.iloc[:40]
+    X_test = X.iloc[40:]
+    y_train = y.iloc[:40]
+    y_test = y.iloc[40:]
+    print(f"\n=== Data Split (Matching Unplugged Activity) ===")
+    print(f"Training set: {len(X_train)} samples (first 15 houses)")
+    print(f"Testing set: {len(X_test)} samples (last 3 houses)")
+
+    return X_train, X_test, y_train, y_test
 
 
-def train_model(X_train, y_train):
+def train_model(X_train, y_train, feature_names):
     """
     Train the linear regression model
     
@@ -147,10 +163,27 @@ def train_model(X_train, y_train):
     
     # Your code here
     
-    pass
+    model = LinearRegression()
+    model.fit(X_train, y_train)
+    print(f"\n=== Model Training Complete ===")
+    print(f"Intercept: ${model.intercept_:.2f}")
+
+    print(f"\nCoefficients:")
+    for name, coef in zip(feature_names, model.coef_):
+        print(f"  {name}: {coef:.2f}")
+    print(f"\nEquation:")
+    equation = f"Price = "
+    for i, (name, coef) in enumerate(zip(feature_names, model.coef_)):
+        if i == 0:
+            equation += f"{coef:.2f} × {name}"
+        else:
+            equation += f" + ({coef:.2f}) × {name}"
+    equation += f" + {model.intercept_:.2f}"
+    print(equation)
+    return model
 
 
-def evaluate_model(model, X_test, y_test):
+def evaluate_model(model, X_test, y_test, feature_names):
     """
     Evaluate model performance
     
@@ -175,10 +208,25 @@ def evaluate_model(model, X_test, y_test):
     
     # Your code here
     
-    pass
+    predictions = model.predict(X_test)
+    r2 = r2_score(y_test, predictions)
+    mse = mean_squared_error(y_test, predictions)
+    rmse = np.sqrt(mse)
+    print(f"\n=== Model Performance ===")
+    print(f"R² Score: {r2:.4f}")
+    print(f"  → Model explains {r2*100:.2f}% of price variation")
+    print(f"\nRoot Mean Squared Error: ${rmse:.2f}")
+    print(f"  → On average, predictions are off by ${rmse:.2f}")
+    print(f"\n=== Feature Importance ===")
+    feature_importance = list(zip(feature_names, np.abs(model.coef_)))
+    feature_importance.sort(key=lambda x: x[1], reverse=True)
+    
+    for i, (name, importance) in enumerate(feature_importance, 1):
+        print(f"{i}. {name}: {importance:.2f}")
+    return predictions
 
 
-def make_prediction(model):
+def make_prediction(model, age, goals, assists):
     """
     Make a prediction for a new example
     
@@ -199,7 +247,16 @@ def make_prediction(model):
     # Example: If predicting house price with [sqft, bedrooms, bathrooms]
     # sample = pd.DataFrame([[2000, 3, 2]], columns=feature_names)
     
-    pass
+    price_features = pd.DataFrame([[age, goals, assists]], 
+                                 columns=['Age', 'Goals', 'Assists'])
+    predicted_price = model.predict(price_features)[0]
+
+    # TODO: Print the house specs and predicted price nicely formatted
+    print(f"\n=== New Prediction ===")
+    print(f"Price Features: {age:.0f} years, {goals} # of Goals, {assists} # of Assists")
+    print(f"Predicted price: ${predicted_price:,.2f}")
+    # TODO: Return the predicted price
+    return predicted_price
 
 
 if __name__ == "__main__":
